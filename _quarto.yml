@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Demand Forecasting Analysis"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: analysis.qmd
+        text: Analysis
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-location: left
+    code-fold: true
+    code-tools: true

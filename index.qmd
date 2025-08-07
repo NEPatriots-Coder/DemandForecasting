@@ -1,0 +1,45 @@
+---
+title: "Supply Chain Lead Time Analysis"
+author: "Lamar Wells"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: false
+---
+
+# Welcome to the Supply Chain Analytics Dashboard
+
+This comprehensive analysis examines lead time performance across our supply chain, providing critical insights into delivery reliability and operational risk.
+
+## Analysis Overview
+
+**Dataset**: 195 parts analyzed across multiple performance metrics
+
+**Key Metrics Evaluated**:
+- Lead time variability and consistency
+- On-time delivery performance
+- Supplier reliability scores
+- Risk categorization (Low, Medium, High, Critical)
+
+## Quick Insights
+
+::: {.callout-warning}
+## Critical Finding
+**77.9%** of parts are classified as high or critical risk, with an average on-time rate of only **40.1%**
+:::
+
+::: {.callout-tip}
+## Opportunity
+Only **3.6%** of parts demonstrate reliable performance - significant room for improvement through strategic supplier management
+:::
+
+## Navigation
+
+- **[Full Analysis →](analysis.qmd)** - Complete lead time analysis with visualizations and recommendations
+- **Data Source**: `lead_time_analysis_wf.xlsx`
+- **Last Updated**: `r Sys.Date()`
+
+---
+
+*This analysis supports data-driven decision making for supply chain optimization and risk mitigation strategies.*

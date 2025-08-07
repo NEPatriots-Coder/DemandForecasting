@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Midland Purhasing Team">
+<meta name="dcterms.date" content="2025-08-07">
+
+<title>Demand Forecasting Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Demand Forecasting Analysis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./analysis.html" aria-current="page"> 
+<span class="menu-text">Analysis</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link active" data-scroll-target="#executive-summary">Executive Summary</a></li>
+  <li><a href="#data-overview" id="toc-data-overview" class="nav-link" data-scroll-target="#data-overview">Data Overview</a></li>
+  <li><a href="#risk-analysis" id="toc-risk-analysis" class="nav-link" data-scroll-target="#risk-analysis">Risk Analysis</a>
+  <ul class="collapse">
+  <li><a href="#risk-category-distribution" id="toc-risk-category-distribution" class="nav-link" data-scroll-target="#risk-category-distribution">Risk Category Distribution</a></li>
+  <li><a href="#risk-visualization" id="toc-risk-visualization" class="nav-link" data-scroll-target="#risk-visualization">Risk Visualization</a></li>
+  </ul></li>
+  <li><a href="#performance-metrics" id="toc-performance-metrics" class="nav-link" data-scroll-target="#performance-metrics">Performance Metrics</a>
+  <ul class="collapse">
+  <li><a href="#key-statistics" id="toc-key-statistics" class="nav-link" data-scroll-target="#key-statistics">Key Statistics</a></li>
+  <li><a href="#parts-by-risk-category" id="toc-parts-by-risk-category" class="nav-link" data-scroll-target="#parts-by-risk-category">Parts by Risk Category</a></li>
+  </ul></li>
+  <li><a href="#lead-time-analysis" id="toc-lead-time-analysis" class="nav-link" data-scroll-target="#lead-time-analysis">Lead Time Analysis</a></li>
+  <li><a href="#conclusions-and-recommendations" id="toc-conclusions-and-recommendations" class="nav-link" data-scroll-target="#conclusions-and-recommendations">Conclusions and Recommendations</a>
+  <ul class="collapse">
+  <li><a href="#critical-issues-identified" id="toc-critical-issues-identified" class="nav-link" data-scroll-target="#critical-issues-identified">Critical Issues Identified</a></li>
+  <li><a href="#recommended-actions" id="toc-recommended-actions" class="nav-link" data-scroll-target="#recommended-actions">Recommended Actions</a>
+  <ul class="collapse">
+  <li><a href="#immediate-0-3-months" id="toc-immediate-0-3-months" class="nav-link" data-scroll-target="#immediate-0-3-months">Immediate (0-3 months)</a></li>
+  <li><a href="#medium-term-3-12-months" id="toc-medium-term-3-12-months" class="nav-link" data-scroll-target="#medium-term-3-12-months">Medium-term (3-12 months)</a></li>
+  <li><a href="#long-term-12-months" id="toc-long-term-12-months" class="nav-link" data-scroll-target="#long-term-12-months">Long-term (12+ months)</a></li>
+  </ul></li>
+  <li><a href="#success-metrics" id="toc-success-metrics" class="nav-link" data-scroll-target="#success-metrics">Success Metrics</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Demand Forecasting Analysis</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Midland Purhasing Team </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="executive-summary" class="level1">
+<h1>Executive Summary</h1>
+<p>This analysis examines supply chain lead time performance across 195 parts, revealing critical insights into delivery reliability and risk assessment. The analysis categorizes parts into risk levels based on lead time variability, on-time performance, and reliability scores.</p>
+<p><strong>Key Findings:</strong> - 77.9% of parts are classified as high or critical risk - Only 3.6% of parts demonstrate reliable performance - Average on-time delivery rate is 40.1% - Significant opportunity for supply chain optimization</p>
+</section>
+<section id="data-overview" class="level1">
+<h1>Data Overview</h1>
+<div id="3655bb19" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test Python execution</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Python is working!"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libraries</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_excel(<span class="st">'lead_time_analysis_wf.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Lead_Time_Stats'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✅ Dataset loaded: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> parts with </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> metrics"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    df.head()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"❌ Excel file not found. Please ensure 'lead_time_analysis_wf.xlsx' is in the working directory."</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create sample data for demonstration</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Product'</span>: [<span class="st">'1100A'</span>, <span class="st">'1100B'</span>, <span class="st">'116'</span>, <span class="st">'116R'</span>, <span class="st">'119'</span>],</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">'risk_category'</span>: [<span class="st">'HIGH_RISK'</span>, <span class="st">'LOW_RISK'</span>, <span class="st">'HIGH_RISK'</span>, <span class="st">'MEDIUM_RISK'</span>, <span class="st">'CRITICAL_RISK'</span>],</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">'on_time_rate'</span>: [<span class="fl">50.0</span>, <span class="fl">100.0</span>, <span class="fl">20.0</span>, <span class="fl">66.7</span>, <span class="fl">0.0</span>],</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">'lead_time_mean'</span>: [<span class="fl">31.0</span>, <span class="fl">20.0</span>, <span class="fl">33.0</span>, <span class="fl">23.67</span>, <span class="fl">25.0</span>]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Using sample data for demonstration"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Python is working!
+✅ Dataset loaded: 195 parts with 12 metrics</code></pre>
+</div>
+</div>
+</section>
+<section id="risk-analysis" class="level1">
+<h1>Risk Analysis</h1>
+<section id="risk-category-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="risk-category-distribution">Risk Category Distribution</h2>
+<div id="c55127ee" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate risk distribution</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>risk_counts <span class="op">=</span> df[<span class="st">'risk_category'</span>].value_counts()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>risk_percent <span class="op">=</span> df[<span class="st">'risk_category'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame({<span class="st">'Count'</span>: risk_counts, <span class="st">'Percentage'</span>: risk_percent.<span class="bu">round</span>(<span class="dv">2</span>)})</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Supply Chain Risk Distribution:"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(summary_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Supply Chain Risk Distribution:
+               Count  Percentage
+risk_category                   
+HIGH_RISK        118       60.51
+MEDIUM_RISK       36       18.46
+CRITICAL_RISK     34       17.44
+LOW_RISK           7        3.59</code></pre>
+</div>
+</div>
+</section>
+<section id="risk-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="risk-visualization">Risk Visualization</h2>
+<div id="d86d0144" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create risk distribution pie chart</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>risk_breakdown <span class="op">=</span> df[<span class="st">'risk_category'</span>].value_counts()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Risk categories pie chart</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#FF6B6B'</span>, <span class="st">'#FFE66D'</span>, <span class="st">'#FF9F43'</span>, <span class="st">'#51CF66'</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>wedges, texts, autotexts <span class="op">=</span> plt.pie(risk_breakdown.values, labels<span class="op">=</span>risk_breakdown.index, </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                                   autopct<span class="op">=</span><span class="st">'</span><span class="sc">%1.1f%%</span><span class="st">'</span>, colors<span class="op">=</span>colors, startangle<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Supply Chain Risk Distribution'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># On-time performance histogram</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.hist(df[<span class="st">'on_time_rate'</span>], bins<span class="op">=</span><span class="dv">20</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">'#FF6B6B'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'On-Time Rate (%)'</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Parts'</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'On-Time Performance Distribution'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.axvline(df[<span class="st">'on_time_rate'</span>].mean(), color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="ss">f'Mean: </span><span class="sc">{</span>df[<span class="st">"on_time_rate"</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss">%'</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/cell-4-output-1.png" width="1103" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="performance-metrics" class="level1">
+<h1>Performance Metrics</h1>
+<section id="key-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="key-statistics">Key Statistics</h2>
+<div id="f1e8aff3" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate key performance indicators</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>high_critical_count <span class="op">=</span> risk_breakdown[<span class="st">'HIGH_RISK'</span>] <span class="op">+</span> risk_breakdown[<span class="st">'CRITICAL_RISK'</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>low_risk_count <span class="op">=</span> risk_breakdown[<span class="st">'LOW_RISK'</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>avg_on_time <span class="op">=</span> df[<span class="st">'on_time_rate'</span>].mean()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>avg_lead_time <span class="op">=</span> df[<span class="st">'lead_time_mean'</span>].mean()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"📊 SUPPLY CHAIN PERFORMANCE SUMMARY"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">45</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"• </span><span class="sc">{</span>high_critical_count<span class="sc">}</span><span class="ss"> parts (</span><span class="sc">{</span>high_critical_count<span class="op">/</span><span class="bu">len</span>(df)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%) are high/critical risk"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"• Only </span><span class="sc">{</span>low_risk_count<span class="sc">}</span><span class="ss"> parts (</span><span class="sc">{</span>low_risk_count<span class="op">/</span><span class="bu">len</span>(df)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%) are truly reliable"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"• Average on-time rate: </span><span class="sc">{</span>avg_on_time<span class="sc">:.1f}</span><span class="ss">%"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"• Average lead time: </span><span class="sc">{</span>avg_lead_time<span class="sc">:.1f}</span><span class="ss"> days"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>📊 SUPPLY CHAIN PERFORMANCE SUMMARY
+=============================================
+• 152 parts (77.9%) are high/critical risk
+• Only 7 parts (3.6%) are truly reliable
+• Average on-time rate: 40.1%
+• Average lead time: 23.7 days</code></pre>
+</div>
+</div>
+</section>
+<section id="parts-by-risk-category" class="level2">
+<h2 class="anchored" data-anchor-id="parts-by-risk-category">Parts by Risk Category</h2>
+<div id="29b76324" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show parts in each risk category</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>parts_by_risk <span class="op">=</span> {category: df[df[<span class="st">'risk_category'</span>] <span class="op">==</span> category][<span class="st">'Product'</span>].tolist() </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">for</span> category <span class="kw">in</span> risk_breakdown.index}</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category, parts <span class="kw">in</span> parts_by_risk.items():</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>category<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="bu">len</span>(parts)<span class="sc">}</span><span class="ss"> parts):"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">", "</span>.join(parts[:<span class="dv">10</span>]))  <span class="co"># Show first 10 parts</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(parts) <span class="op">&gt;</span> <span class="dv">10</span>:</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"... and </span><span class="sc">{</span><span class="bu">len</span>(parts) <span class="op">-</span> <span class="dv">10</span><span class="sc">}</span><span class="ss"> more"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+HIGH_RISK (118 parts):
+1100A, 116, 1400A, 1400B, 1401A056, 1401A076, 1401A086, 1401A096, 1401A106, 1401A116
+... and 108 more
+
+MEDIUM_RISK (36 parts):
+116R, 120, 1703B32RAW, 302, 4000G, 4001C, 4001F, 4001G, 4002C, 4002F
+... and 26 more
+
+CRITICAL_RISK (34 parts):
+119, 1401A066, 1401A241, 1401B136, 1401B156, 1401B186, 1401B206, 1508, 1703B36RAW, 300B
+... and 24 more
+
+LOW_RISK (7 parts):
+1100B, 1400KZ, 300, 4000H, 4006F, 4010M, 4015JA</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="lead-time-analysis" class="level1">
+<h1>Lead Time Analysis</h1>
+<div id="28fc70b9" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lead time statistics by risk category</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Lead Time Statistics by Risk Category:"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> [<span class="st">'LOW_RISK'</span>, <span class="st">'MEDIUM_RISK'</span>, <span class="st">'HIGH_RISK'</span>, <span class="st">'CRITICAL_RISK'</span>]:</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">'risk_category'</span>] <span class="op">==</span> category]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(subset) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>category<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Average Lead Time: </span><span class="sc">{</span>subset[<span class="st">'lead_time_mean'</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss"> days"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Lead Time Std Dev: </span><span class="sc">{</span>subset[<span class="st">'lead_time_std'</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss"> days"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Average On-Time Rate: </span><span class="sc">{</span>subset[<span class="st">'on_time_rate'</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss">%"</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Parts Count: </span><span class="sc">{</span><span class="bu">len</span>(subset)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Lead Time Statistics by Risk Category:
+==================================================
+
+LOW_RISK:
+  Average Lead Time: 19.0 days
+  Lead Time Std Dev: 3.3 days
+  Average On-Time Rate: 97.1%
+  Parts Count: 7
+
+MEDIUM_RISK:
+  Average Lead Time: 20.2 days
+  Lead Time Std Dev: 6.7 days
+  Average On-Time Rate: 58.9%
+  Parts Count: 36
+
+HIGH_RISK:
+  Average Lead Time: 24.0 days
+  Lead Time Std Dev: 8.3 days
+  Average On-Time Rate: 35.1%
+  Parts Count: 118
+
+CRITICAL_RISK:
+  Average Lead Time: 27.3 days
+  Lead Time Std Dev: 11.4 days
+  Average On-Time Rate: 25.6%
+  Parts Count: 34</code></pre>
+</div>
+</div>
+<div id="3ec75652" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 20 Products with Highest Mean Lead Time</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>top_20_df <span class="op">=</span> df[[<span class="st">'Product'</span>, <span class="st">'lead_time_mean'</span>]].sort_values(<span class="st">'lead_time_mean'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">20</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top 20 Products with Highest Mean Lead Time:"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>display(top_20_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Top 20 Products with Highest Mean Lead Time:</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Product</th>
+<th data-quarto-table-cell-role="th">lead_time_mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">23</td>
+<td>1401B206</td>
+<td>96.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">121</td>
+<td>4010C</td>
+<td>44.35</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">175</td>
+<td>4015N</td>
+<td>42.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">40</td>
+<td>300B</td>
+<td>36.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">82</td>
+<td>4003O</td>
+<td>35.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">55</td>
+<td>4001AAA</td>
+<td>35.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">36</td>
+<td>1703B36RAW</td>
+<td>34.67</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">31</td>
+<td>1703B26RAW</td>
+<td>33.79</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30</td>
+<td>1703B24RAW</td>
+<td>33.56</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>116</td>
+<td>33.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">29</td>
+<td>1703B22RAW</td>
+<td>32.91</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">28</td>
+<td>1703B20RAW</td>
+<td>32.64</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">32</td>
+<td>1703B28RAW</td>
+<td>32.43</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">33</td>
+<td>1703B30RAW</td>
+<td>31.89</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">129</td>
+<td>4012B</td>
+<td>31.83</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">78</td>
+<td>4003IA</td>
+<td>31.67</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1100A</td>
+<td>31.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">20</td>
+<td>1401B136</td>
+<td>30.47</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">161</td>
+<td>4015C</td>
+<td>29.50</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">100</td>
+<td>4008AA</td>
+<td>29.33</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="e10bcd02" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load problem parts data</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>problem_parts <span class="op">=</span> pd.read_excel(<span class="st">'lead_time_analysis_wf.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Problem_Parts'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"🚨 WORST PERFORMING PARTS:"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">80</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>worst_parts <span class="op">=</span> problem_parts.nsmallest(<span class="dv">10</span>, <span class="st">'on_time_rate'</span>)[[<span class="st">'Product'</span>, <span class="st">'lead_time_mean'</span>, <span class="st">'on_time_rate'</span>, <span class="st">'risk_category'</span>]]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> worst_parts.iterrows():</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Part </span><span class="sc">{</span>row[<span class="st">'Product'</span>]<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>row[<span class="st">'lead_time_mean'</span>]<span class="sc">:.1f}</span><span class="ss"> days avg, </span><span class="sc">{</span>row[<span class="st">'on_time_rate'</span>]<span class="sc">:.1f}</span><span class="ss">% on-time, </span><span class="sc">{</span>row[<span class="st">'risk_category'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the problem</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.scatter(df[<span class="st">'lead_time_mean'</span>], df[<span class="st">'on_time_rate'</span>], </span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>           c<span class="op">=</span>df[<span class="st">'lead_time_cv'</span>], cmap<span class="op">=</span><span class="st">'YlOrRd'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Average Lead Time (days)'</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'On-Time Rate (%)'</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lead Time vs Reliability'</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Coefficient of Variation'</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>risk_colors <span class="op">=</span> {<span class="st">'LOW_RISK'</span>: <span class="st">'#51CF66'</span>, <span class="st">'MEDIUM_RISK'</span>: <span class="st">'#FFE66D'</span>, <span class="st">'HIGH_RISK'</span>: <span class="st">'#FF9F43'</span>, <span class="st">'CRITICAL_RISK'</span>: <span class="st">'#FF6B6B'</span>}</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> risk <span class="kw">in</span> risk_colors.keys():</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">'risk_category'</span>] <span class="op">==</span> risk]</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">'lead_time_mean'</span>], subset[<span class="st">'lead_time_std'</span>], </span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>               color<span class="op">=</span>risk_colors[risk], label<span class="op">=</span>risk, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Mean Lead Time (days)'</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Lead Time Standard Deviation'</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lead Time Variability by Risk Category'</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>plt.boxplot([df[df[<span class="st">'risk_category'</span>] <span class="op">==</span> risk][<span class="st">'lead_time_mean'</span>] </span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> risk <span class="kw">in</span> [<span class="st">'LOW_RISK'</span>, <span class="st">'MEDIUM_RISK'</span>, <span class="st">'HIGH_RISK'</span>, <span class="st">'CRITICAL_RISK'</span>]], </span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[<span class="st">'Low'</span>, <span class="st">'Medium'</span>, <span class="st">'High'</span>, <span class="st">'Critical'</span>])</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Lead Time (days)'</span>)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lead Time Distribution by Risk'</span>)</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>cv_by_risk <span class="op">=</span> df.groupby(<span class="st">'risk_category'</span>)[<span class="st">'lead_time_cv'</span>].mean()</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> plt.bar(cv_by_risk.index, cv_by_risk.values, </span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>               color<span class="op">=</span>[risk_colors[risk] <span class="cf">for</span> risk <span class="kw">in</span> cv_by_risk.index])</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Average Coefficient of Variation'</span>)</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lead Time Predictability by Risk'</span>)</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>🚨 WORST PERFORMING PARTS:
+================================================================================
+Part 411: 27.8 days avg, 0.0% on-time, CRITICAL_RISK
+Part 4001AA: 24.0 days avg, 0.0% on-time, CRITICAL_RISK
+Part 4014E: 28.2 days avg, 0.0% on-time, CRITICAL_RISK
+Part 1703B36RAW: 34.7 days avg, 0.0% on-time, CRITICAL_RISK
+Part 427: 26.7 days avg, 7.1% on-time, CRITICAL_RISK
+Part 1401A066: 23.4 days avg, 7.1% on-time, CRITICAL_RISK
+Part 426: 26.1 days avg, 7.7% on-time, CRITICAL_RISK
+Part 428: 27.1 days avg, 12.5% on-time, CRITICAL_RISK
+Part 4015L: 27.6 days avg, 12.5% on-time, CRITICAL_RISK
+Part 409: 25.4 days avg, 13.0% on-time, HIGH_RISK</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/cell-9-output-2.png" width="1334" height="759" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="2681925b" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>overview_df <span class="op">=</span> pd.read_excel(<span class="st">'DAN_ATL .xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'OVERVIEW'</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>bundle_df <span class="op">=</span> pd.read_excel(<span class="st">'DAN_ATL .xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'BUNDLE_QUANTITIES'</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>weight_df <span class="op">=</span> pd.read_excel(<span class="st">'DAN_ATL .xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'WEIGHT'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>frequency_df <span class="op">=</span> pd.read_excel(<span class="st">'DAN_ATL .xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'FREQUENCY'</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"🚀 ADVANCED SYSTEM OVERVIEW:"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parts in Optimization System: </span><span class="sc">{</span><span class="bu">len</span>(overview_df)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total Inventory Value: $</span><span class="sc">{</span>overview_df[<span class="st">'INVENTORY_AMOUNT_ONHAND'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Projected Annual Demand Value: $</span><span class="sc">{</span>(overview_df[<span class="st">'PROJECTED EOY 2025 USAGE'</span>] <span class="op">*</span> overview_df[<span class="st">'COST'</span>])<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Key system features</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Lead time-adjusted safety stock calculations"</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Frequency-based categorization system"</span>, </span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Weight-constrained ordering optimization"</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Cost-aware inventory management"</span>,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Predictive 2025 demand forecasting"</span>,</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Multi-tier urgency level system"</span>,</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Bundle quantity optimization"</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">System Features:"</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> feature <span class="kw">in</span> features:</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(feature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>🚀 ADVANCED SYSTEM OVERVIEW:
+==================================================
+Parts in Optimization System: 138
+Total Inventory Value: $343,689.70
+Projected Annual Demand Value: $1,323,343.93
+
+System Features:
+✓ Lead time-adjusted safety stock calculations
+✓ Frequency-based categorization system
+✓ Weight-constrained ordering optimization
+✓ Cost-aware inventory management
+✓ Predictive 2025 demand forecasting
+✓ Multi-tier urgency level system
+✓ Bundle quantity optimization</code></pre>
+</div>
+</div>
+<div id="82715edf" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">10</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Current vs Optimal Safety Stock</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(overview_df[<span class="st">'SAFETY_STOCK'</span>], overview_df[<span class="st">'OPTIMAL_SAFETY_STOCK'</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, overview_df[<span class="st">'SAFETY_STOCK'</span>].<span class="bu">max</span>()], [<span class="dv">0</span>, overview_df[<span class="st">'SAFETY_STOCK'</span>].<span class="bu">max</span>()], <span class="st">'r--'</span>, label<span class="op">=</span><span class="st">'1:1 Line'</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Current Safety Stock'</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Optimal Safety Stock'</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Safety Stock Optimization'</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Potential Savings Distribution</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>savings_data <span class="op">=</span> overview_df[<span class="st">'POTENTIAL_SAVINGS'</span>].dropna()</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>plt.hist(savings_data, bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">'green'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Potential Savings ($)'</span>)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Parts'</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Potential Savings Distribution</span><span class="ch">\n</span><span class="ss">Total: $</span><span class="sc">{</span>savings_data<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,.2f}</span><span class="ss">'</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Days on Hand Analysis</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>plt.hist(overview_df[<span class="st">'DAYS_ON_HAND'</span>], bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">'blue'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Days on Hand'</span>)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Parts'</span>)</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Current Inventory Coverage'</span>)</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>plt.axvline(overview_df[<span class="st">'DAYS_ON_HAND'</span>].median(), color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="ss">f'Median: </span><span class="sc">{</span>overview_df[<span class="st">"DAYS_ON_HAND"</span>]<span class="sc">.</span>median()<span class="sc">:.0f}</span><span class="ss"> days'</span>)</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency Category Analysis</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>freq_analysis <span class="op">=</span> overview_df[<span class="st">'FREQUENCY_CATEGORY'</span>].value_counts()</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> plt.cm.Set3(np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="bu">len</span>(freq_analysis)))</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>plt.pie(freq_analysis.values, labels<span class="op">=</span>freq_analysis.index, autopct<span class="op">=</span><span class="st">'</span><span class="sc">%1.1f%%</span><span class="st">'</span>, colors<span class="op">=</span>colors)</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Parts by Frequency Category'</span>)</span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Lead Time vs Current Usage</span></span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>plt.scatter(overview_df[<span class="st">'LEAD_TIME'</span>], overview_df[<span class="st">'CURRENT_MONTHLY_USAGE'</span>], </span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>           c<span class="op">=</span>overview_df[<span class="st">'FREQUENCY'</span>], cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Lead Time (days)'</span>)</span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Current Monthly Usage'</span>)</span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Usage Patterns vs Lead Time'</span>)</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Frequency Score'</span>)</span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Urgency Level Distribution</span></span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>)</span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>urgency_counts <span class="op">=</span> overview_df[<span class="st">'URGENCY_LEVEL'</span>].value_counts()</span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#FF6B6B'</span>, <span class="st">'#FFE66D'</span>, <span class="st">'#51CF66'</span>]  <span class="co"># Red, Yellow, Green</span></span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>plt.bar(urgency_counts.index, urgency_counts.values, color<span class="op">=</span>colors[:<span class="bu">len</span>(urgency_counts)])</span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Urgency Level'</span>)</span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Parts'</span>)</span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Action Priority Distribution'</span>)</span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Key insights</span></span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">📊 OPTIMIZATION INSIGHTS:"</span>)</span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>total_current_safety <span class="op">=</span> overview_df[<span class="st">'SAFETY_STOCK'</span>].<span class="bu">sum</span>()</span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>total_optimal_safety <span class="op">=</span> overview_df[<span class="st">'OPTIMAL_SAFETY_STOCK'</span>].<span class="bu">sum</span>()</span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>total_savings <span class="op">=</span> overview_df[<span class="st">'POTENTIAL_SAVINGS'</span>].<span class="bu">sum</span>()</span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Current Total Safety Stock: </span><span class="sc">{</span>total_current_safety<span class="sc">:,.0f}</span><span class="ss"> units"</span>)</span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Optimal Total Safety Stock: </span><span class="sc">{</span>total_optimal_safety<span class="sc">:,.0f}</span><span class="ss"> units"</span>)</span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total Potential Savings: $</span><span class="sc">{</span>total_savings<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average Days Coverage: </span><span class="sc">{</span>overview_df[<span class="st">'DAYS_ON_HAND'</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss"> days"</span>)</span>
+<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parts Requiring Immediate Attention: </span><span class="sc">{</span>(overview_df[<span class="st">'URGENCY_LEVEL'</span>] <span class="op">==</span> <span class="st">'HIGH'</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/cell-11-output-1.png" width="1523" height="951" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+📊 OPTIMIZATION INSIGHTS:
+==================================================
+Current Total Safety Stock: 15,620 units
+Optimal Total Safety Stock: 10,186 units
+Total Potential Savings: $108,220.00
+Average Days Coverage: 487.8 days
+Parts Requiring Immediate Attention: 1</code></pre>
+</div>
+</div>
+<div id="e61bc75e" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>safety_factor_analysis <span class="op">=</span> pd.merge(overview_df[[<span class="st">'PART_NUMBER'</span>, <span class="st">'SAFETY_FACTOR'</span>, <span class="st">'FREQUENCY_CATEGORY'</span>, <span class="st">'LEAD_TIME'</span>]], </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                 df[[<span class="st">'Product'</span>, <span class="st">'risk_category'</span>, <span class="st">'lead_time_cv'</span>]], </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                                 left_on<span class="op">=</span><span class="st">'PART_NUMBER'</span>, right_on<span class="op">=</span><span class="st">'Product'</span>, how<span class="op">=</span><span class="st">'inner'</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Safety Factor by Risk Category:"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>risk_safety <span class="op">=</span> safety_factor_analysis.groupby(<span class="st">'risk_category'</span>)[<span class="st">'SAFETY_FACTOR'</span>].agg([<span class="st">'mean'</span>, <span class="st">'std'</span>, <span class="st">'count'</span>])</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(risk_safety)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the relationship</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>risk_categories <span class="op">=</span> [<span class="st">'LOW_RISK'</span>, <span class="st">'MEDIUM_RISK'</span>, <span class="st">'HIGH_RISK'</span>, <span class="st">'CRITICAL_RISK'</span>]</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>safety_by_risk <span class="op">=</span> [safety_factor_analysis[safety_factor_analysis[<span class="st">'risk_category'</span>] <span class="op">==</span> risk][<span class="st">'SAFETY_FACTOR'</span>].values </span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">for</span> risk <span class="kw">in</span> risk_categories]</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>bp <span class="op">=</span> plt.boxplot(safety_by_risk, labels<span class="op">=</span>risk_categories, patch_artist<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#51CF66'</span>, <span class="st">'#FFE66D'</span>, <span class="st">'#FF9F43'</span>, <span class="st">'#FF6B6B'</span>]</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> patch, color <span class="kw">in</span> <span class="bu">zip</span>(bp[<span class="st">'boxes'</span>], colors):</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    patch.set_facecolor(color)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Safety Factor'</span>)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Safety Factor Distribution by Risk Category'</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Map FREQUENCY_CATEGORY to numeric codes for coloring</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>freq_map <span class="op">=</span> {cat: idx <span class="cf">for</span> idx, cat <span class="kw">in</span> <span class="bu">enumerate</span>(safety_factor_analysis[<span class="st">'FREQUENCY_CATEGORY'</span>].unique())}</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>freq_numeric <span class="op">=</span> safety_factor_analysis[<span class="st">'FREQUENCY_CATEGORY'</span>].<span class="bu">map</span>(freq_map)</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>scatter <span class="op">=</span> plt.scatter(safety_factor_analysis[<span class="st">'lead_time_cv'</span>], safety_factor_analysis[<span class="st">'SAFETY_FACTOR'</span>], </span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>                      c<span class="op">=</span>freq_numeric, cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Lead Time Coefficient of Variation'</span>)</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Safety Factor'</span>)</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Safety Factor vs Lead Time Variability'</span>)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> plt.colorbar(scatter, ticks<span class="op">=</span><span class="bu">list</span>(freq_map.values()))</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>cbar.ax.set_yticklabels(<span class="bu">list</span>(freq_map.keys()))</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>cbar.set_label(<span class="st">'Frequency Category'</span>)</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Safety Factor by Risk Category:
+                   mean       std  count
+risk_category                           
+CRITICAL_RISK  2.000000  0.000000     14
+HIGH_RISK      1.560563  0.330575     71
+LOW_RISK       2.000000  0.000000      5
+MEDIUM_RISK    1.686957  0.323762     23</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/cell-12-output-2.png" width="1318" height="567" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusions-and-recommendations" class="level1">
+<h1>Conclusions and Recommendations</h1>
+<section id="critical-issues-identified" class="level2">
+<h2 class="anchored" data-anchor-id="critical-issues-identified">Critical Issues Identified</h2>
+<ol type="1">
+<li><strong>Supply Chain Reliability Crisis</strong>: With 77.9% of parts in high/critical risk categories, immediate action is required</li>
+<li><strong>Poor On-Time Performance</strong>: 40.1% average on-time rate is well below industry standards</li>
+<li><strong>Limited Reliable Suppliers</strong>: Only 7 parts (3.6%) demonstrate consistent reliability</li>
+</ol>
+</section>
+<section id="recommended-actions" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-actions">Recommended Actions</h2>
+<section id="immediate-0-3-months" class="level3">
+<h3 class="anchored" data-anchor-id="immediate-0-3-months">Immediate (0-3 months)</h3>
+<ul>
+<li>Focus on the 34 <strong>CRITICAL_RISK</strong> parts for supplier diversification</li>
+<li>Implement enhanced monitoring for high-risk categories</li>
+<li>Negotiate service level agreements with key suppliers</li>
+</ul>
+</section>
+<section id="medium-term-3-12-months" class="level3">
+<h3 class="anchored" data-anchor-id="medium-term-3-12-months">Medium-term (3-12 months)</h3>
+<ul>
+<li>Develop alternative suppliers for high-risk parts</li>
+<li>Implement predictive analytics for lead time forecasting</li>
+<li>Create safety stock strategies based on risk categories</li>
+</ul>
+</section>
+<section id="long-term-12-months" class="level3">
+<h3 class="anchored" data-anchor-id="long-term-12-months">Long-term (12+ months)</h3>
+<ul>
+<li>Strategic supplier partnerships with reliable vendors</li>
+<li>Supply chain digitization and real-time tracking</li>
+<li>Continuous improvement programs targeting lead time reduction</li>
+</ul>
+</section>
+</section>
+<section id="success-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="success-metrics">Success Metrics</h2>
+<ul>
+<li>Target: Reduce high/critical risk parts from 77.9% to &lt;50%</li>
+<li>Target: Improve average on-time rate from 40.1% to &gt;80%</li>
+<li>Target: Increase reliable parts from 3.6% to &gt;25%</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb22" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Demand Forecasting Analysis"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Midland Purhasing Team"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: cosmo</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">    fig-width: 10</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co">    fig-height: 6</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: true</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">  message: false</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co">  error: false</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="fu"># Executive Summary</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>This analysis examines supply chain lead time performance across 195 parts, revealing critical insights into delivery reliability and risk assessment. The analysis categorizes parts into risk levels based on lead time variability, on-time performance, and reliability scores.</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>**Key Findings:**</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>77.9% of parts are classified as high or critical risk</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Only 3.6% of parts demonstrate reliable performance</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Average on-time delivery rate is 40.1%</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Significant opportunity for supply chain optimization</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Overview</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Test Python execution</span></span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Python is working!"</span>)</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libraries</span></span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_excel(<span class="st">'lead_time_analysis_wf.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Lead_Time_Stats'</span>)</span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✅ Dataset loaded: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> parts with </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> metrics"</span>)</span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>    df.head()</span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"❌ Excel file not found. Please ensure 'lead_time_analysis_wf.xlsx' is in the working directory."</span>)</span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create sample data for demonstration</span></span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Product'</span>: [<span class="st">'1100A'</span>, <span class="st">'1100B'</span>, <span class="st">'116'</span>, <span class="st">'116R'</span>, <span class="st">'119'</span>],</span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">'risk_category'</span>: [<span class="st">'HIGH_RISK'</span>, <span class="st">'LOW_RISK'</span>, <span class="st">'HIGH_RISK'</span>, <span class="st">'MEDIUM_RISK'</span>, <span class="st">'CRITICAL_RISK'</span>],</span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>        <span class="st">'on_time_rate'</span>: [<span class="fl">50.0</span>, <span class="fl">100.0</span>, <span class="fl">20.0</span>, <span class="fl">66.7</span>, <span class="fl">0.0</span>],</span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">'lead_time_mean'</span>: [<span class="fl">31.0</span>, <span class="fl">20.0</span>, <span class="fl">33.0</span>, <span class="fl">23.67</span>, <span class="fl">25.0</span>]</span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Using sample data for demonstration"</span>)</span>
+<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a>    df</span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a><span class="fu"># Risk Analysis</span></span>
+<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Risk Category Distribution</span></span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate risk distribution</span></span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a>risk_counts <span class="op">=</span> df[<span class="st">'risk_category'</span>].value_counts()</span>
+<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a>risk_percent <span class="op">=</span> df[<span class="st">'risk_category'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> pd.DataFrame({<span class="st">'Count'</span>: risk_counts, <span class="st">'Percentage'</span>: risk_percent.<span class="bu">round</span>(<span class="dv">2</span>)})</span>
+<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Supply Chain Risk Distribution:"</span>)</span>
+<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(summary_df)</span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Risk Visualization</span></span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Create risk distribution pie chart</span></span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a>risk_breakdown <span class="op">=</span> df[<span class="st">'risk_category'</span>].value_counts()</span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Risk categories pie chart</span></span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#FF6B6B'</span>, <span class="st">'#FFE66D'</span>, <span class="st">'#FF9F43'</span>, <span class="st">'#51CF66'</span>]</span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a>wedges, texts, autotexts <span class="op">=</span> plt.pie(risk_breakdown.values, labels<span class="op">=</span>risk_breakdown.index, </span>
+<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a>                                   autopct<span class="op">=</span><span class="st">'</span><span class="sc">%1.1f%%</span><span class="st">'</span>, colors<span class="op">=</span>colors, startangle<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Supply Chain Risk Distribution'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a><span class="co"># On-time performance histogram</span></span>
+<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a>plt.hist(df[<span class="st">'on_time_rate'</span>], bins<span class="op">=</span><span class="dv">20</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">'#FF6B6B'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'On-Time Rate (%)'</span>)</span>
+<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Parts'</span>)</span>
+<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'On-Time Performance Distribution'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a>plt.axvline(df[<span class="st">'on_time_rate'</span>].mean(), color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="ss">f'Mean: </span><span class="sc">{</span>df[<span class="st">"on_time_rate"</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss">%'</span>)</span>
+<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a><span class="fu"># Performance Metrics</span></span>
+<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Statistics</span></span>
+<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate key performance indicators</span></span>
+<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a>high_critical_count <span class="op">=</span> risk_breakdown[<span class="st">'HIGH_RISK'</span>] <span class="op">+</span> risk_breakdown[<span class="st">'CRITICAL_RISK'</span>]</span>
+<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a>low_risk_count <span class="op">=</span> risk_breakdown[<span class="st">'LOW_RISK'</span>]</span>
+<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a>avg_on_time <span class="op">=</span> df[<span class="st">'on_time_rate'</span>].mean()</span>
+<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a>avg_lead_time <span class="op">=</span> df[<span class="st">'lead_time_mean'</span>].mean()</span>
+<span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"📊 SUPPLY CHAIN PERFORMANCE SUMMARY"</span>)</span>
+<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">45</span>)</span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"• </span><span class="sc">{</span>high_critical_count<span class="sc">}</span><span class="ss"> parts (</span><span class="sc">{</span>high_critical_count<span class="op">/</span><span class="bu">len</span>(df)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%) are high/critical risk"</span>)</span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"• Only </span><span class="sc">{</span>low_risk_count<span class="sc">}</span><span class="ss"> parts (</span><span class="sc">{</span>low_risk_count<span class="op">/</span><span class="bu">len</span>(df)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%) are truly reliable"</span>)</span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"• Average on-time rate: </span><span class="sc">{</span>avg_on_time<span class="sc">:.1f}</span><span class="ss">%"</span>)</span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"• Average lead time: </span><span class="sc">{</span>avg_lead_time<span class="sc">:.1f}</span><span class="ss"> days"</span>)</span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parts by Risk Category</span></span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a><span class="co"># Show parts in each risk category</span></span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a>parts_by_risk <span class="op">=</span> {category: df[df[<span class="st">'risk_category'</span>] <span class="op">==</span> category][<span class="st">'Product'</span>].tolist() </span>
+<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">for</span> category <span class="kw">in</span> risk_breakdown.index}</span>
+<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category, parts <span class="kw">in</span> parts_by_risk.items():</span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>category<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="bu">len</span>(parts)<span class="sc">}</span><span class="ss"> parts):"</span>)</span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">", "</span>.join(parts[:<span class="dv">10</span>]))  <span class="co"># Show first 10 parts</span></span>
+<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(parts) <span class="op">&gt;</span> <span class="dv">10</span>:</span>
+<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"... and </span><span class="sc">{</span><span class="bu">len</span>(parts) <span class="op">-</span> <span class="dv">10</span><span class="sc">}</span><span class="ss"> more"</span>)</span>
+<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a><span class="fu"># Lead Time Analysis</span></span>
+<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a><span class="co"># Lead time statistics by risk category</span></span>
+<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Lead Time Statistics by Risk Category:"</span>)</span>
+<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> [<span class="st">'LOW_RISK'</span>, <span class="st">'MEDIUM_RISK'</span>, <span class="st">'HIGH_RISK'</span>, <span class="st">'CRITICAL_RISK'</span>]:</span>
+<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">'risk_category'</span>] <span class="op">==</span> category]</span>
+<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(subset) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>category<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Average Lead Time: </span><span class="sc">{</span>subset[<span class="st">'lead_time_mean'</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss"> days"</span>)</span>
+<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Lead Time Std Dev: </span><span class="sc">{</span>subset[<span class="st">'lead_time_std'</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss"> days"</span>)</span>
+<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Average On-Time Rate: </span><span class="sc">{</span>subset[<span class="st">'on_time_rate'</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss">%"</span>)</span>
+<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Parts Count: </span><span class="sc">{</span><span class="bu">len</span>(subset)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 20 Products with Highest Mean Lead Time</span></span>
+<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a>top_20_df <span class="op">=</span> df[[<span class="st">'Product'</span>, <span class="st">'lead_time_mean'</span>]].sort_values(<span class="st">'lead_time_mean'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">20</span>)</span>
+<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top 20 Products with Highest Mean Lead Time:"</span>)</span>
+<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a>display(top_20_df)</span>
+<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a><span class="co"># Load problem parts data</span></span>
+<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>problem_parts <span class="op">=</span> pd.read_excel(<span class="st">'lead_time_analysis_wf.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'Problem_Parts'</span>)</span>
+<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"🚨 WORST PERFORMING PARTS:"</span>)</span>
+<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">80</span>)</span>
+<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a>worst_parts <span class="op">=</span> problem_parts.nsmallest(<span class="dv">10</span>, <span class="st">'on_time_rate'</span>)[[<span class="st">'Product'</span>, <span class="st">'lead_time_mean'</span>, <span class="st">'on_time_rate'</span>, <span class="st">'risk_category'</span>]]</span>
+<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> worst_parts.iterrows():</span>
+<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Part </span><span class="sc">{</span>row[<span class="st">'Product'</span>]<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>row[<span class="st">'lead_time_mean'</span>]<span class="sc">:.1f}</span><span class="ss"> days avg, </span><span class="sc">{</span>row[<span class="st">'on_time_rate'</span>]<span class="sc">:.1f}</span><span class="ss">% on-time, </span><span class="sc">{</span>row[<span class="st">'risk_category'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the problem</span></span>
+<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
+<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a>plt.scatter(df[<span class="st">'lead_time_mean'</span>], df[<span class="st">'on_time_rate'</span>], </span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a>           c<span class="op">=</span>df[<span class="st">'lead_time_cv'</span>], cmap<span class="op">=</span><span class="st">'YlOrRd'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Average Lead Time (days)'</span>)</span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'On-Time Rate (%)'</span>)</span>
+<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lead Time vs Reliability'</span>)</span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Coefficient of Variation'</span>)</span>
+<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a>risk_colors <span class="op">=</span> {<span class="st">'LOW_RISK'</span>: <span class="st">'#51CF66'</span>, <span class="st">'MEDIUM_RISK'</span>: <span class="st">'#FFE66D'</span>, <span class="st">'HIGH_RISK'</span>: <span class="st">'#FF9F43'</span>, <span class="st">'CRITICAL_RISK'</span>: <span class="st">'#FF6B6B'</span>}</span>
+<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> risk <span class="kw">in</span> risk_colors.keys():</span>
+<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">'risk_category'</span>] <span class="op">==</span> risk]</span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">'lead_time_mean'</span>], subset[<span class="st">'lead_time_std'</span>], </span>
+<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a>               color<span class="op">=</span>risk_colors[risk], label<span class="op">=</span>risk, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Mean Lead Time (days)'</span>)</span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Lead Time Standard Deviation'</span>)</span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lead Time Variability by Risk Category'</span>)</span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a>plt.boxplot([df[df[<span class="st">'risk_category'</span>] <span class="op">==</span> risk][<span class="st">'lead_time_mean'</span>] </span>
+<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> risk <span class="kw">in</span> [<span class="st">'LOW_RISK'</span>, <span class="st">'MEDIUM_RISK'</span>, <span class="st">'HIGH_RISK'</span>, <span class="st">'CRITICAL_RISK'</span>]], </span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[<span class="st">'Low'</span>, <span class="st">'Medium'</span>, <span class="st">'High'</span>, <span class="st">'Critical'</span>])</span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Lead Time (days)'</span>)</span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lead Time Distribution by Risk'</span>)</span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a>cv_by_risk <span class="op">=</span> df.groupby(<span class="st">'risk_category'</span>)[<span class="st">'lead_time_cv'</span>].mean()</span>
+<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> plt.bar(cv_by_risk.index, cv_by_risk.values, </span>
+<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a>               color<span class="op">=</span>[risk_colors[risk] <span class="cf">for</span> risk <span class="kw">in</span> cv_by_risk.index])</span>
+<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Average Coefficient of Variation'</span>)</span>
+<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lead Time Predictability by Risk'</span>)</span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a>overview_df <span class="op">=</span> pd.read_excel(<span class="st">'DAN_ATL .xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'OVERVIEW'</span>)</span>
+<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>bundle_df <span class="op">=</span> pd.read_excel(<span class="st">'DAN_ATL .xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'BUNDLE_QUANTITIES'</span>)</span>
+<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a>weight_df <span class="op">=</span> pd.read_excel(<span class="st">'DAN_ATL .xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'WEIGHT'</span>)</span>
+<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a>frequency_df <span class="op">=</span> pd.read_excel(<span class="st">'DAN_ATL .xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'FREQUENCY'</span>)</span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"🚀 ADVANCED SYSTEM OVERVIEW:"</span>)</span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parts in Optimization System: </span><span class="sc">{</span><span class="bu">len</span>(overview_df)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total Inventory Value: $</span><span class="sc">{</span>overview_df[<span class="st">'INVENTORY_AMOUNT_ONHAND'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Projected Annual Demand Value: $</span><span class="sc">{</span>(overview_df[<span class="st">'PROJECTED EOY 2025 USAGE'</span>] <span class="op">*</span> overview_df[<span class="st">'COST'</span>])<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a><span class="co"># Key system features</span></span>
+<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [</span>
+<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Lead time-adjusted safety stock calculations"</span>,</span>
+<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Frequency-based categorization system"</span>, </span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Weight-constrained ordering optimization"</span>,</span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Cost-aware inventory management"</span>,</span>
+<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Predictive 2025 demand forecasting"</span>,</span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Multi-tier urgency level system"</span>,</span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a>    <span class="st">"✓ Bundle quantity optimization"</span></span>
+<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">System Features:"</span>)</span>
+<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> feature <span class="kw">in</span> features:</span>
+<span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(feature)</span>
+<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">10</span>))</span>
+<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a><span class="co"># Current vs Optimal Safety Stock</span></span>
+<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a>plt.scatter(overview_df[<span class="st">'SAFETY_STOCK'</span>], overview_df[<span class="st">'OPTIMAL_SAFETY_STOCK'</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, overview_df[<span class="st">'SAFETY_STOCK'</span>].<span class="bu">max</span>()], [<span class="dv">0</span>, overview_df[<span class="st">'SAFETY_STOCK'</span>].<span class="bu">max</span>()], <span class="st">'r--'</span>, label<span class="op">=</span><span class="st">'1:1 Line'</span>)</span>
+<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Current Safety Stock'</span>)</span>
+<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Optimal Safety Stock'</span>)</span>
+<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Safety Stock Optimization'</span>)</span>
+<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a><span class="co"># Potential Savings Distribution</span></span>
+<span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a>savings_data <span class="op">=</span> overview_df[<span class="st">'POTENTIAL_SAVINGS'</span>].dropna()</span>
+<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a>plt.hist(savings_data, bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">'green'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Potential Savings ($)'</span>)</span>
+<span id="cb22-279"><a href="#cb22-279" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Parts'</span>)</span>
+<span id="cb22-280"><a href="#cb22-280" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Potential Savings Distribution</span><span class="ch">\n</span><span class="ss">Total: $</span><span class="sc">{</span>savings_data<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,.2f}</span><span class="ss">'</span>)</span>
+<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-282"><a href="#cb22-282" aria-hidden="true" tabindex="-1"></a><span class="co"># Days on Hand Analysis</span></span>
+<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a>plt.hist(overview_df[<span class="st">'DAYS_ON_HAND'</span>], bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">'blue'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Days on Hand'</span>)</span>
+<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Parts'</span>)</span>
+<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Current Inventory Coverage'</span>)</span>
+<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a>plt.axvline(overview_df[<span class="st">'DAYS_ON_HAND'</span>].median(), color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb22-289"><a href="#cb22-289" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="ss">f'Median: </span><span class="sc">{</span>overview_df[<span class="st">"DAYS_ON_HAND"</span>]<span class="sc">.</span>median()<span class="sc">:.0f}</span><span class="ss"> days'</span>)</span>
+<span id="cb22-290"><a href="#cb22-290" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb22-291"><a href="#cb22-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-292"><a href="#cb22-292" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency Category Analysis</span></span>
+<span id="cb22-293"><a href="#cb22-293" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb22-294"><a href="#cb22-294" aria-hidden="true" tabindex="-1"></a>freq_analysis <span class="op">=</span> overview_df[<span class="st">'FREQUENCY_CATEGORY'</span>].value_counts()</span>
+<span id="cb22-295"><a href="#cb22-295" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> plt.cm.Set3(np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="bu">len</span>(freq_analysis)))</span>
+<span id="cb22-296"><a href="#cb22-296" aria-hidden="true" tabindex="-1"></a>plt.pie(freq_analysis.values, labels<span class="op">=</span>freq_analysis.index, autopct<span class="op">=</span><span class="st">'</span><span class="sc">%1.1f%%</span><span class="st">'</span>, colors<span class="op">=</span>colors)</span>
+<span id="cb22-297"><a href="#cb22-297" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Parts by Frequency Category'</span>)</span>
+<span id="cb22-298"><a href="#cb22-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-299"><a href="#cb22-299" aria-hidden="true" tabindex="-1"></a><span class="co"># Lead Time vs Current Usage</span></span>
+<span id="cb22-300"><a href="#cb22-300" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb22-301"><a href="#cb22-301" aria-hidden="true" tabindex="-1"></a>plt.scatter(overview_df[<span class="st">'LEAD_TIME'</span>], overview_df[<span class="st">'CURRENT_MONTHLY_USAGE'</span>], </span>
+<span id="cb22-302"><a href="#cb22-302" aria-hidden="true" tabindex="-1"></a>           c<span class="op">=</span>overview_df[<span class="st">'FREQUENCY'</span>], cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb22-303"><a href="#cb22-303" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Lead Time (days)'</span>)</span>
+<span id="cb22-304"><a href="#cb22-304" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Current Monthly Usage'</span>)</span>
+<span id="cb22-305"><a href="#cb22-305" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Usage Patterns vs Lead Time'</span>)</span>
+<span id="cb22-306"><a href="#cb22-306" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Frequency Score'</span>)</span>
+<span id="cb22-307"><a href="#cb22-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-308"><a href="#cb22-308" aria-hidden="true" tabindex="-1"></a><span class="co"># Urgency Level Distribution</span></span>
+<span id="cb22-309"><a href="#cb22-309" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>)</span>
+<span id="cb22-310"><a href="#cb22-310" aria-hidden="true" tabindex="-1"></a>urgency_counts <span class="op">=</span> overview_df[<span class="st">'URGENCY_LEVEL'</span>].value_counts()</span>
+<span id="cb22-311"><a href="#cb22-311" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#FF6B6B'</span>, <span class="st">'#FFE66D'</span>, <span class="st">'#51CF66'</span>]  <span class="co"># Red, Yellow, Green</span></span>
+<span id="cb22-312"><a href="#cb22-312" aria-hidden="true" tabindex="-1"></a>plt.bar(urgency_counts.index, urgency_counts.values, color<span class="op">=</span>colors[:<span class="bu">len</span>(urgency_counts)])</span>
+<span id="cb22-313"><a href="#cb22-313" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Urgency Level'</span>)</span>
+<span id="cb22-314"><a href="#cb22-314" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Parts'</span>)</span>
+<span id="cb22-315"><a href="#cb22-315" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Action Priority Distribution'</span>)</span>
+<span id="cb22-316"><a href="#cb22-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-317"><a href="#cb22-317" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb22-318"><a href="#cb22-318" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb22-319"><a href="#cb22-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-320"><a href="#cb22-320" aria-hidden="true" tabindex="-1"></a><span class="co"># Key insights</span></span>
+<span id="cb22-321"><a href="#cb22-321" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">📊 OPTIMIZATION INSIGHTS:"</span>)</span>
+<span id="cb22-322"><a href="#cb22-322" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb22-323"><a href="#cb22-323" aria-hidden="true" tabindex="-1"></a>total_current_safety <span class="op">=</span> overview_df[<span class="st">'SAFETY_STOCK'</span>].<span class="bu">sum</span>()</span>
+<span id="cb22-324"><a href="#cb22-324" aria-hidden="true" tabindex="-1"></a>total_optimal_safety <span class="op">=</span> overview_df[<span class="st">'OPTIMAL_SAFETY_STOCK'</span>].<span class="bu">sum</span>()</span>
+<span id="cb22-325"><a href="#cb22-325" aria-hidden="true" tabindex="-1"></a>total_savings <span class="op">=</span> overview_df[<span class="st">'POTENTIAL_SAVINGS'</span>].<span class="bu">sum</span>()</span>
+<span id="cb22-326"><a href="#cb22-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-327"><a href="#cb22-327" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Current Total Safety Stock: </span><span class="sc">{</span>total_current_safety<span class="sc">:,.0f}</span><span class="ss"> units"</span>)</span>
+<span id="cb22-328"><a href="#cb22-328" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Optimal Total Safety Stock: </span><span class="sc">{</span>total_optimal_safety<span class="sc">:,.0f}</span><span class="ss"> units"</span>)</span>
+<span id="cb22-329"><a href="#cb22-329" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total Potential Savings: $</span><span class="sc">{</span>total_savings<span class="sc">:,.2f}</span><span class="ss">"</span>)</span>
+<span id="cb22-330"><a href="#cb22-330" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average Days Coverage: </span><span class="sc">{</span>overview_df[<span class="st">'DAYS_ON_HAND'</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss"> days"</span>)</span>
+<span id="cb22-331"><a href="#cb22-331" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parts Requiring Immediate Attention: </span><span class="sc">{</span>(overview_df[<span class="st">'URGENCY_LEVEL'</span>] <span class="op">==</span> <span class="st">'HIGH'</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-332"><a href="#cb22-332" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-333"><a href="#cb22-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-336"><a href="#cb22-336" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-337"><a href="#cb22-337" aria-hidden="true" tabindex="-1"></a>safety_factor_analysis <span class="op">=</span> pd.merge(overview_df[[<span class="st">'PART_NUMBER'</span>, <span class="st">'SAFETY_FACTOR'</span>, <span class="st">'FREQUENCY_CATEGORY'</span>, <span class="st">'LEAD_TIME'</span>]], </span>
+<span id="cb22-338"><a href="#cb22-338" aria-hidden="true" tabindex="-1"></a>                                 df[[<span class="st">'Product'</span>, <span class="st">'risk_category'</span>, <span class="st">'lead_time_cv'</span>]], </span>
+<span id="cb22-339"><a href="#cb22-339" aria-hidden="true" tabindex="-1"></a>                                 left_on<span class="op">=</span><span class="st">'PART_NUMBER'</span>, right_on<span class="op">=</span><span class="st">'Product'</span>, how<span class="op">=</span><span class="st">'inner'</span>)</span>
+<span id="cb22-340"><a href="#cb22-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-341"><a href="#cb22-341" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Safety Factor by Risk Category:"</span>)</span>
+<span id="cb22-342"><a href="#cb22-342" aria-hidden="true" tabindex="-1"></a>risk_safety <span class="op">=</span> safety_factor_analysis.groupby(<span class="st">'risk_category'</span>)[<span class="st">'SAFETY_FACTOR'</span>].agg([<span class="st">'mean'</span>, <span class="st">'std'</span>, <span class="st">'count'</span>])</span>
+<span id="cb22-343"><a href="#cb22-343" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(risk_safety)</span>
+<span id="cb22-344"><a href="#cb22-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-345"><a href="#cb22-345" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the relationship</span></span>
+<span id="cb22-346"><a href="#cb22-346" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb22-347"><a href="#cb22-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-348"><a href="#cb22-348" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb22-349"><a href="#cb22-349" aria-hidden="true" tabindex="-1"></a>risk_categories <span class="op">=</span> [<span class="st">'LOW_RISK'</span>, <span class="st">'MEDIUM_RISK'</span>, <span class="st">'HIGH_RISK'</span>, <span class="st">'CRITICAL_RISK'</span>]</span>
+<span id="cb22-350"><a href="#cb22-350" aria-hidden="true" tabindex="-1"></a>safety_by_risk <span class="op">=</span> [safety_factor_analysis[safety_factor_analysis[<span class="st">'risk_category'</span>] <span class="op">==</span> risk][<span class="st">'SAFETY_FACTOR'</span>].values </span>
+<span id="cb22-351"><a href="#cb22-351" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">for</span> risk <span class="kw">in</span> risk_categories]</span>
+<span id="cb22-352"><a href="#cb22-352" aria-hidden="true" tabindex="-1"></a>bp <span class="op">=</span> plt.boxplot(safety_by_risk, labels<span class="op">=</span>risk_categories, patch_artist<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-353"><a href="#cb22-353" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#51CF66'</span>, <span class="st">'#FFE66D'</span>, <span class="st">'#FF9F43'</span>, <span class="st">'#FF6B6B'</span>]</span>
+<span id="cb22-354"><a href="#cb22-354" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> patch, color <span class="kw">in</span> <span class="bu">zip</span>(bp[<span class="st">'boxes'</span>], colors):</span>
+<span id="cb22-355"><a href="#cb22-355" aria-hidden="true" tabindex="-1"></a>    patch.set_facecolor(color)</span>
+<span id="cb22-356"><a href="#cb22-356" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Safety Factor'</span>)</span>
+<span id="cb22-357"><a href="#cb22-357" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Safety Factor Distribution by Risk Category'</span>)</span>
+<span id="cb22-358"><a href="#cb22-358" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb22-359"><a href="#cb22-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-360"><a href="#cb22-360" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb22-361"><a href="#cb22-361" aria-hidden="true" tabindex="-1"></a><span class="co"># Map FREQUENCY_CATEGORY to numeric codes for coloring</span></span>
+<span id="cb22-362"><a href="#cb22-362" aria-hidden="true" tabindex="-1"></a>freq_map <span class="op">=</span> {cat: idx <span class="cf">for</span> idx, cat <span class="kw">in</span> <span class="bu">enumerate</span>(safety_factor_analysis[<span class="st">'FREQUENCY_CATEGORY'</span>].unique())}</span>
+<span id="cb22-363"><a href="#cb22-363" aria-hidden="true" tabindex="-1"></a>freq_numeric <span class="op">=</span> safety_factor_analysis[<span class="st">'FREQUENCY_CATEGORY'</span>].<span class="bu">map</span>(freq_map)</span>
+<span id="cb22-364"><a href="#cb22-364" aria-hidden="true" tabindex="-1"></a>scatter <span class="op">=</span> plt.scatter(safety_factor_analysis[<span class="st">'lead_time_cv'</span>], safety_factor_analysis[<span class="st">'SAFETY_FACTOR'</span>], </span>
+<span id="cb22-365"><a href="#cb22-365" aria-hidden="true" tabindex="-1"></a>                      c<span class="op">=</span>freq_numeric, cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb22-366"><a href="#cb22-366" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Lead Time Coefficient of Variation'</span>)</span>
+<span id="cb22-367"><a href="#cb22-367" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Safety Factor'</span>)</span>
+<span id="cb22-368"><a href="#cb22-368" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Safety Factor vs Lead Time Variability'</span>)</span>
+<span id="cb22-369"><a href="#cb22-369" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> plt.colorbar(scatter, ticks<span class="op">=</span><span class="bu">list</span>(freq_map.values()))</span>
+<span id="cb22-370"><a href="#cb22-370" aria-hidden="true" tabindex="-1"></a>cbar.ax.set_yticklabels(<span class="bu">list</span>(freq_map.keys()))</span>
+<span id="cb22-371"><a href="#cb22-371" aria-hidden="true" tabindex="-1"></a>cbar.set_label(<span class="st">'Frequency Category'</span>)</span>
+<span id="cb22-372"><a href="#cb22-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-373"><a href="#cb22-373" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb22-374"><a href="#cb22-374" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb22-375"><a href="#cb22-375" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-376"><a href="#cb22-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-377"><a href="#cb22-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-378"><a href="#cb22-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-379"><a href="#cb22-379" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusions and Recommendations</span></span>
+<span id="cb22-380"><a href="#cb22-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-381"><a href="#cb22-381" aria-hidden="true" tabindex="-1"></a><span class="fu">## Critical Issues Identified</span></span>
+<span id="cb22-382"><a href="#cb22-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-383"><a href="#cb22-383" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Supply Chain Reliability Crisis**: With 77.9% of parts in high/critical risk categories, immediate action is required</span>
+<span id="cb22-384"><a href="#cb22-384" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Poor On-Time Performance**: 40.1% average on-time rate is well below industry standards</span>
+<span id="cb22-385"><a href="#cb22-385" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Limited Reliable Suppliers**: Only 7 parts (3.6%) demonstrate consistent reliability</span>
+<span id="cb22-386"><a href="#cb22-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-387"><a href="#cb22-387" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recommended Actions</span></span>
+<span id="cb22-388"><a href="#cb22-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-389"><a href="#cb22-389" aria-hidden="true" tabindex="-1"></a><span class="fu">### Immediate (0-3 months)</span></span>
+<span id="cb22-390"><a href="#cb22-390" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Focus on the 34 **CRITICAL_RISK** parts for supplier diversification</span>
+<span id="cb22-391"><a href="#cb22-391" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Implement enhanced monitoring for high-risk categories</span>
+<span id="cb22-392"><a href="#cb22-392" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Negotiate service level agreements with key suppliers</span>
+<span id="cb22-393"><a href="#cb22-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-394"><a href="#cb22-394" aria-hidden="true" tabindex="-1"></a><span class="fu">### Medium-term (3-12 months)</span></span>
+<span id="cb22-395"><a href="#cb22-395" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Develop alternative suppliers for high-risk parts</span>
+<span id="cb22-396"><a href="#cb22-396" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Implement predictive analytics for lead time forecasting</span>
+<span id="cb22-397"><a href="#cb22-397" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create safety stock strategies based on risk categories</span>
+<span id="cb22-398"><a href="#cb22-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-399"><a href="#cb22-399" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long-term (12+ months)</span></span>
+<span id="cb22-400"><a href="#cb22-400" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Strategic supplier partnerships with reliable vendors</span>
+<span id="cb22-401"><a href="#cb22-401" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Supply chain digitization and real-time tracking</span>
+<span id="cb22-402"><a href="#cb22-402" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Continuous improvement programs targeting lead time reduction</span>
+<span id="cb22-403"><a href="#cb22-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-404"><a href="#cb22-404" aria-hidden="true" tabindex="-1"></a><span class="fu">## Success Metrics</span></span>
+<span id="cb22-405"><a href="#cb22-405" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Target: Reduce high/critical risk parts from 77.9% to &lt;50%</span>
+<span id="cb22-406"><a href="#cb22-406" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Target: Improve average on-time rate from 40.1% to &gt;80%</span>
+<span id="cb22-407"><a href="#cb22-407" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Target: Increase reliable parts from 3.6% to &gt;25%</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
