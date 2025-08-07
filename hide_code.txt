@@ -1,0 +1,11 @@
+Add this line after each ```{python} in your .qmd file:
+
+#| echo: false
+
+Example:
+```{python}
+#| echo: false
+your code here
+```
+
+This will hide the Python code and show only the output in the PDF.
