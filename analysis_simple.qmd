@@ -1,0 +1,117 @@
+---
+title: "Inventory Optimization Analysis"
+subtitle: "Supply Chain Performance & Cost Reduction Opportunities"
+format: 
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings('ignore')
+
+# Load data with error handling
+try:
+    df = pd.read_excel('lead_time_analysis_wf.xlsx', sheet_name='Lead_Time_Stats')
+    overview_df = pd.read_excel('lead_time_analysis_wf.xlsx', sheet_name='Overview')
+    data_loaded = True
+except:
+    print("Note: Using sample data for demonstration")
+    df = pd.DataFrame({
+        'risk_category': ['HIGH_RISK', 'LOW_RISK', 'MEDIUM_RISK', 'CRITICAL_RISK'] * 25,
+        'on_time_rate': np.random.normal(50, 20, 100)
+    })
+    overview_df = pd.DataFrame({
+        'PART_NUMBER': [f'PART{i}' for i in range(100)],
+        'POTENTIAL_SAVINGS': np.random.normal(1000, 500, 100),
+        'INVENTORY_AMOUNT_ONHAND': np.random.normal(5000, 2000, 100)
+    })
+    data_loaded = False
+```
+
+# Executive Summary
+
+This analysis examines our inventory management performance and identifies cost reduction opportunities.
+
+## Key Business Metrics
+
+```{python}
+total_parts = len(overview_df)
+high_risk_parts = len(df[df['risk_category'].isin(['HIGH_RISK', 'CRITICAL_RISK'])])
+avg_on_time = df['on_time_rate'].fillna(0).mean()
+potential_savings = overview_df['POTENTIAL_SAVINGS'].fillna(0).sum()
+
+print("📊 BUSINESS IMPACT SUMMARY")
+print("=" * 40)
+print(f"• Total Parts Analyzed: {total_parts:,}")
+print(f"• High-Risk Parts: {high_risk_parts} ({high_risk_parts/len(df)*100:.1f}%)")
+print(f"• Average On-Time Delivery: {avg_on_time:.1f}%")
+print(f"• Potential Annual Savings: ${potential_savings:,.0f}")
+```
+
+# Supply Chain Performance
+
+```{python}
+# Simple visualization
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+# Risk distribution
+risk_counts = df['risk_category'].value_counts()
+ax1.pie(risk_counts.values, labels=risk_counts.index, autopct='%1.1f%%', startangle=90)
+ax1.set_title('Parts by Risk Level')
+
+# Performance by risk
+risk_perf = df.groupby('risk_category')['on_time_rate'].mean().fillna(0)
+ax2.bar(risk_perf.index, risk_perf.values)
+ax2.set_ylabel('On-Time Rate (%)')
+ax2.set_title('Performance by Risk Level')
+ax2.tick_params(axis='x', rotation=45)
+
+plt.tight_layout()
+plt.show()
+```
+
+# Financial Impact
+
+```{python}
+total_investment = overview_df['INVENTORY_AMOUNT_ONHAND'].fillna(0).sum()
+total_savings = overview_df['POTENTIAL_SAVINGS'].fillna(0).sum()
+
+print("💰 FINANCIAL SUMMARY")
+print("=" * 30)
+print(f"Current Investment: ${total_investment:,.0f}")
+print(f"Potential Savings: ${total_savings:,.0f}")
+if total_investment > 0:
+    roi = (total_savings / total_investment) * 100
+    print(f"ROI: {roi:.1f}%")
+```
+
+# Recommendations
+
+## Immediate Actions (0-30 days)
+- Review high-risk parts for supplier alternatives
+- Implement safety stock adjustments for top savings opportunities
+- Establish performance monitoring for critical suppliers
+
+## Medium-term (3-6 months)
+- Develop supplier diversification strategy
+- Enhance demand forecasting capabilities
+- Implement automated reorder systems
+
+## Long-term (6-12 months)
+- Strategic supplier partnerships
+- Supply chain digitization
+- Continuous improvement processes
+
+---
+
+*This analysis provides actionable insights for optimizing inventory investment while maintaining service levels.*
